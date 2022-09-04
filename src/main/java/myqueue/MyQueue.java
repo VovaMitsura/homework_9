@@ -35,7 +35,6 @@ public class MyQueue<E> implements Queue<E> {
     private Node tail;
     private int size;
 
-
     private class Node {
         private Node next;
         private Node prev;
@@ -45,7 +44,6 @@ public class MyQueue<E> implements Queue<E> {
             this.data = data;
         }
     }
-
 
     @Override
     public void add(E value) {

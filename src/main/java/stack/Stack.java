@@ -7,5 +7,4 @@ public interface Stack<E> {
     int size();
     E peek();
     E pop();
-
 }

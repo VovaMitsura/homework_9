@@ -36,7 +36,6 @@ public class MyStack<E> implements Stack<E> {
         }
     }
 
-
     @Override
     public void push(E value) {
         Node newNode = new Node(value);
@@ -136,5 +135,4 @@ public class MyStack<E> implements Stack<E> {
         } else
             return false;
     }
-
 }

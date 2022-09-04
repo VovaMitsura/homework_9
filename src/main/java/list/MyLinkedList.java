@@ -58,7 +58,6 @@ public class MyLinkedList<E> implements List<E> {
         }
     }
 
-
     @Override
     public void add(E value) {
         Node newNode = new Node(value);
@@ -172,5 +171,4 @@ public class MyLinkedList<E> implements List<E> {
         } else
             return null;
     }
-
 }
