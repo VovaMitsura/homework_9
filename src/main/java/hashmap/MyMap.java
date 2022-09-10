@@ -1,6 +1,6 @@
 package hashmap;
 
-public interface Map<K, V> {
+public interface MyMap<K, V> {
     void put(K key, V value);
     void remove(K key);
     V get(K key);

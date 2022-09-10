@@ -1,48 +1,6 @@
 package list;
 
-public class MyLinkedList<E> implements List<E> {
-
-    public static void main(String[] args) {
-        MyLinkedList<Integer> list = new MyLinkedList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-
-        list.display();
-        System.out.println();
-
-        System.out.println(list.get(4));
-        System.out.println(list.get(3));
-
-        list.remove(3);
-
-        list.display();
-
-        list.remove(1);
-
-        System.out.println();
-        list.display();
-
-
-        list.remove(0);
-
-        System.out.println();
-        list.display();
-
-        list.remove(1);
-
-        System.out.println();
-        list.display();
-
-        list.remove(0);
-
-        System.out.println();
-        list.display();
-
-
-    }
+public class MyLinkedList<E> implements MyList<E> {
 
     private Node root;
     private Node tail;
@@ -116,6 +74,7 @@ public class MyLinkedList<E> implements List<E> {
         }
     }
 
+    @Override
     public void display() {
         if (root != null) {
             Node temp = root;

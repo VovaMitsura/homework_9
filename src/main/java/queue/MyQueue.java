@@ -1,6 +1,6 @@
-package myqueue;
+package queue;
 
-public interface Queue<E>{
+public interface MyQueue<E>{
     void add(E value);
     void remove(E index);
     void clear();

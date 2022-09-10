@@ -1,45 +1,6 @@
 package list;
 
-public class MyArrayList<E> implements List<E> {
-
-    public static void main(String[] args) {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        list.add(7);
-        list.add(8);
-        list.add(9);
-        list.add(10);
-        list.add(11);
-        list.add(12);
-
-        list.display();
-
-        list.remove(3);
-        list.remove(1);
-        list.remove(2);
-        list.remove(4);
-        list.remove(5);
-        list.remove(0);
-        list.remove(1);
-        list.remove(2);
-        list.remove(3);
-        list.remove(0);
-        list.remove(1);
-        list.remove(0);
-        list.remove(0);
-
-        System.out.println(list.size());
-        list.display();
-        System.out.println(list.size());
-
-        list.clear();
-
-    }
+public class MyArrayList<E> implements MyList<E> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -97,6 +58,7 @@ public class MyArrayList<E> implements List<E> {
             return null;
     }
 
+    @Override
     public void display() {
         for (int i = 0; i < size; i++) {
             if (i == size - 1) {

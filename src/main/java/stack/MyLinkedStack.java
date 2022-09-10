@@ -1,35 +1,6 @@
-package myqueue;
+package stack;
 
-public class MyQueue<E> implements Queue<E> {
-
-    public static void main(String[] args) {
-        MyQueue<Integer> queue = new MyQueue<>();
-        queue.add(1);
-        queue.add(2);
-        queue.add(3);
-        queue.add(4);
-        queue.add(5);
-        queue.add(6);
-
-//        queue.remove(1);
-//        queue.remove(3);
-//        queue.remove(2);
-//        queue.remove(5);
-//        queue.remove(3);
-//        queue.remove(4);
-//        queue.remove(6);
-
-        System.out.println(queue.peek());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-
-
-    }
+public class MyLinkedStack<E> implements MyStack<E> {
 
     private Node root;
     private Node tail;
@@ -46,14 +17,13 @@ public class MyQueue<E> implements Queue<E> {
     }
 
     @Override
-    public void add(E value) {
+    public void push(E value) {
         Node newNode = new Node(value);
 
         if (root == null) {
-            root = tail = newNode;
+            root = tail = new Node(value);
         } else {
             Node temp = root;
-
             while (temp.next != null) {
                 temp = temp.next;
             }
@@ -94,7 +64,7 @@ public class MyQueue<E> implements Queue<E> {
     @Override
     public void clear() {
         if (root != null) {
-            root = null;
+            root = tail = null;
         }
     }
 
@@ -105,22 +75,25 @@ public class MyQueue<E> implements Queue<E> {
 
     @Override
     public E peek() {
-        if (root != null) {
-            return root.data;
-        } else return null;
+        if (tail != null) {
+            return tail.data;
+        } else
+            return null;
     }
 
     @Override
-    public E poll() {
-        if (root != null) {
-            E data = root.data;
-            if (root.next != null) {
-                root = root.next;
-                root.prev = null;
-            } else root = tail = null;
+    public E pop() {
+        if (tail != null) {
+            E data = tail.data;
+            if (tail.prev != null) {
+                tail = tail.prev;
+                tail.next = null;
+            } else
+                root = tail = null;
             size--;
             return data;
-        } else return null;
+        } else
+            return null;
     }
 
     public boolean containsValue(E value) {

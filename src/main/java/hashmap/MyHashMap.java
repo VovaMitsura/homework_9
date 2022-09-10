@@ -1,28 +1,6 @@
 package hashmap;
 
-public class MyHashMap<K, V> implements Map<K, V> {
-
-    public static void main(String[] args) {
-        MyHashMap<Integer, String> hashMap = new MyHashMap<>();
-        hashMap.put(1, "1");
-        hashMap.put(2, "2");
-        hashMap.put(3, "Vo");
-        hashMap.put(1, "4");
-        hashMap.put(3, "eq");
-        hashMap.put(4, "qw");
-
-        System.out.println(hashMap.get(3));
-
-        System.out.println(hashMap.get(4));
-        System.out.println(hashMap.get(5));
-
-        hashMap.remove(2);
-        hashMap.remove(4);
-        hashMap.remove(3);
-        hashMap.remove(1);
-        hashMap.remove(1);
-
-    }
+public class MyHashMap<K, V> implements MyMap<K, V> {
 
     private Node root;
     private int size;
