@@ -2,90 +2,102 @@ package hashmap;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
 
-    private Node root;
+    private static final int DEFAULT_CAPACITY = 16;
+
     private int size;
+    private final int capacity;
+    private Node<K, V>[] buckets;
 
-    private class Node {
-        private Node next;
-        private K key;
-        private V value;
-
-        private Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
+    public MyHashMap() {
+        this.capacity = DEFAULT_CAPACITY;
+        this.buckets = new Node[capacity];
     }
 
-    @Override
+    public MyHashMap(int capacity) {
+        this.capacity = capacity;
+        this.buckets = new Node[capacity];
+    }
+
+    private int hash(K key) {
+        if (key != null) {
+            return key.hashCode() % capacity;
+        } else
+            return -1;
+    }
+
     public void put(K key, V value) {
-        if (!containsKey(key)) {
-            Node newNode = new Node(key, value);
-            if (root == null) {
-                root = newNode;
+        if (key != null) {
+            int index = hash(key);
+            Node<K, V> node = new Node<>(key, value);
+            boolean inserted = false;
+            if (buckets[index] == null) {
+                buckets[index] = node;
+                inserted = true;
             } else {
-                Node temp = root;
-
-                while (temp.next != null) {
-                    temp = temp.next;
-                }
-
-                temp.next = newNode;
+                inserted = buckets[index].putNode(key, value);
             }
-            size++;
-        }
-    }
 
-    @Override
-    public void remove(K key) {
-        if (containsKey(key)) {
-            if (root.key.equals(key)) {
-                root = root.next;
-            } else {
-                Node temp = root.next;
-                Node prev = root;
-
-                while (temp.next != null) {
-                    if (temp.key.equals(key)) {
-                        break;
-                    }
-                    prev = prev.next;
-                    temp = temp.next;
-                }
-
-                prev.next = temp.next;
-            }
-            size--;
+            if (inserted)
+                size++;
         }
     }
 
     @Override
     public V get(K key) {
-        if (containsKey(key)) {
-            Node temp = root;
+        V returnValue = null;
 
-            V value = null;
+        if (key != null) {
+            int index = hash(key);
+            Node<K, V> temp = buckets[index];
+            if (temp != null) {
+                Node<K, V> node = temp.getNode(key);
+                if (node != null)
+                    returnValue = node.value;
+            }
+        }
 
-            while (temp.next != null) {
+        return returnValue;
+    }
+
+    @Override
+    public void remove(K key) {
+        if (key != null) {
+            int index = hash(key);
+            boolean deleted = false;
+            Node<K, V> temp = buckets[index];
+
+            if (temp != null) {
                 if (temp.key.equals(key)) {
-                    value = temp.value;
-                    break;
+                    buckets[index] = temp.next;
+                    deleted = true;
+                } else {
+
+                    Node<K, V> prev = temp;
+                    temp = temp.next;
+
+                    while (temp != null) {
+                        if (temp.key.equals(key)) {
+                            prev.next = temp.next;
+                            deleted = true;
+                        }
+                        prev = temp;
+                        temp = temp.next;
+                    }
                 }
-                temp = temp.next;
             }
-
-            if (temp.key.equals(key)) {
-                value = temp.value;
-            }
-
-            return value;
-        } else
-            return null;
+            if (deleted)
+                size--;
+        }
     }
 
     @Override
     public void clear() {
-        if (root != null) {
-            root = null;
+        Node<K, V>[] temp = buckets;
+        if (temp != null) {
+            for (int i = 0; i < size; i++) {
+                temp[i] = null;
+            }
+            size = 0;
         }
     }
 
@@ -94,19 +106,46 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return size;
     }
 
-    public boolean containsKey(K key) {
-        if (root != null) {
-            Node temp = root;
+    private static class Node<K, V> {
+        private Node<K, V> next;
+        private final K key;
+        private final V value;
+
+        private Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        private Node<K, V> getNode(K key) {
+            Node<K, V> temp = this;
 
             while (temp.next != null) {
-                if (temp.key.equals(key)) {
-                    return true;
-                }
+                if (temp.key.equals(key))
+                    return temp;
                 temp = temp.next;
             }
 
-            return temp.key.equals(key);
-        } else
+            if (temp.key.equals(key))
+                return temp;
+            else
+                return null;
+        }
+
+        private boolean putNode(K key, V value) {
+            Node<K, V> newNode = new Node<>(key, value);
+            Node<K, V> temp = this;
+
+            while (temp.next != null) {
+                if (temp.key.equals(newNode.key)) {
+                    return true;
+                } else
+                    temp = temp.next;
+            }
+            if (!temp.key.equals(newNode.key)) {
+                temp.next = newNode;
+                return true;
+            }
             return false;
+        }
     }
 }

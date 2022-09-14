@@ -10,7 +10,7 @@ import stack.MyStack;
 
 public class Demo {
     public static void main(String[] args) {
-        arrayListTest();
+        //arrayListTest();
         //linkedListTest();
         //linkedQueueTest();
         //linkedStackTest();
@@ -137,7 +137,6 @@ public class Demo {
         System.out.println(myStack.pop());
         System.out.println(myStack.pop());
         System.out.println(myStack.pop());
-
     }
 
     private static void hashMapTest() {
@@ -148,17 +147,23 @@ public class Demo {
         hashMap.put(1, "4");
         hashMap.put(3, "eq");
         hashMap.put(4, "qw");
+        hashMap.put(17, "17");
+        hashMap.put(33, "33");
 
         System.out.println(hashMap.get(3));
-
+        System.out.println(hashMap.get(17));
+        System.out.println(hashMap.get(33));
         System.out.println(hashMap.get(4));
         System.out.println(hashMap.get(5));
+        System.out.println(hashMap.get(1));
+
 
         hashMap.remove(2);
         hashMap.remove(4);
         hashMap.remove(3);
+        hashMap.remove(33);
+        hashMap.remove(17);
         hashMap.remove(1);
-        hashMap.remove(1);
-
+        hashMap.remove(33);
     }
 }
